@@ -1,0 +1,40 @@
+#!/bin/sh
+
+# check paths and add them to PATH if not already in PATH
+paths_to_check="/opt/.cmd /work/bin /build/bin"
+
+echo "$paths_to_check" | tr ' ' '\n' | while read -r check; do
+    case ":${PATH}:" in
+        *:"$check":*)
+            ;;
+        *)
+            export PATH="$check:$PATH"
+            ;;
+    esac
+done
+
+# define aliases functions
+docker_exec() {
+    docker exec -it "$@"
+}
+docker_rm() {
+    docker rm -f "$@"
+}
+cd_app() {
+    cd /app/$1
+}
+
+# Docker
+alias de='docker_exec'
+alias ds='docker ps'
+alias dse='docker ps -af status=exited'
+alias dsc='docker rm $(docker ps -aq -f status=exited)'
+alias dl='docker images'
+alias dr='docker_rm'
+alias dri='docker rmi'
+alias dci='docker images -qf dangling=true | xargs docker rmi'
+alias dc='docker compose'
+
+# Tools
+alias aa='./aa'
+alias cw='cd_app'
