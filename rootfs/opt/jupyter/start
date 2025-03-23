@@ -1,0 +1,18 @@
+#!/bin/sh
+name="jupyter"
+config="/work/jupyter"
+
+if [ ! -f "/root/.init_tag_do_not_delete" ]; then
+    echo "Init default root file"
+    mkdir -p /root
+    tar -zxf /build/res/root.tar.gz -C /
+fi
+
+if [ ! -d "$config" ] || [ ! -f "$config/config.py" ]; then
+    echo "Init $name configure"
+    mkdir -p $config
+    cp -a /opt/jupyter/config/config.py $config
+fi
+
+mkdir -p $config/user-settings $config/workspaces
+exec /opt/jupyter/bin/jupyter-lab --config $config/config.py
