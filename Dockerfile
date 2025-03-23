@@ -37,6 +37,6 @@ RUN \
     ## fix permission
     chmod +x /opt/jupyter/start
 
-WORKDIR /work
+WORKDIR /app
 
 CMD [ "/opt/jupyter/start" ]
