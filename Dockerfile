@@ -28,12 +28,14 @@ ADD rootfs /
 RUN \
     #
     ## pack /root
-    mkdir -p /build/res/ && \
-    bash /tmp.sh && \
-    touch /root/.init_tag_do_not_delete && \
-    rm -rf /build/res/root.tar.gz && \
+    mkdir -p /build/res/; \
+    bash /tmp.sh; \
+    touch /root/.init_tag_do_not_delete; \
+    rm -rf /build/res/root.tar.gz; \
     tar -czf /build/res/root.tar.gz /root; \
-    rm -rf /root
+    #
+    ## fix permission
+    chmod +x /opt/jupyter/start
 
 WORKDIR /work
 
